@@ -8,37 +8,41 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import edu.trincoll.functional.TaskPredicate;
-import edu.trincoll.model.Task;
-
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TaskAnalyzer {
     private final List<Task> tasks;
-
+    /**
+     * Constructs a TaskAnalyzer with a list of tasks to analyze.
+     * @param tasks The initial list of tasks.
+     */
     public TaskAnalyzer(List<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
     }
-
-    // TODO: Implement using streams and filter
+    /**
+     * Filters the list of tasks based on a given predicate.
+     * @param predicate The condition to test each task against.
+     * @return A new list containing only the tasks that match the predicate.
+     */
     public List<Task> filterTasks(Predicate<Task> predicate) {
         return tasks.stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
-
-    // TODO: Implement using Optional
+    /**
+     * Finds a task by its unique ID.
+     * @param id The ID of the task to find.
+     * @return An Optional containing the found task, or an empty Optional if no task matches the ID.
+     */
     public Optional<Task> findTaskById(Long id) {
         return tasks.stream()
                 .filter(task -> task.id().equals(id))
                 .findFirst();
     }
-
-    // TODO: Implement using streams, sorted, and limit
+    /**
+     * Gets a list of the highest priority tasks, up to a specified limit.
+     * @param limit The maximum number of tasks to return.
+     * @return A sorted list of the top-priority tasks.
+     */
     public List<Task> getTopPriorityTasks(int limit) {
         return tasks.stream()
                 .sorted(Comparator.comparing(Task::priority,
@@ -47,34 +51,46 @@ public class TaskAnalyzer {
                 .collect(Collectors.toList());
     }
 
-    // TODO: Implement using streams and groupingBy
+    /**
+     * Groups all tasks by their current status.
+     * @return A Map where keys are task statuses and values are lists of tasks with that status.
+     */
     public Map<Task.Status, List<Task>> groupByStatus() {
         return tasks.stream()
                 .collect(Collectors.groupingBy(Task::status));
     }
 
-    // TODO: Implement using streams and partitioningBy
+    /**
+     * Partitions tasks into two groups: overdue and not overdue.
+     * @return A Map where the key 'true' corresponds to overdue tasks and 'false' to non-overdue tasks.
+     */
     public Map<Boolean, List<Task>> partitionByOverdue() {
         return tasks.stream()
                 .collect(Collectors.partitioningBy(Task::isOverdue));
     }
-
-    // TODO: Implement using streams, map, and collect
+    /**
+     * Collects all unique tags from all tasks.
+     * @return A Set containing every unique tag.
+     */
     public Set<String> getAllUniqueTags() {
         return tasks.stream()
                 .flatMap(task -> task.tags().stream())
                 .collect(Collectors.toSet());
     }
-
-    // TODO: Implement using streams and reduce
+    /**
+     * Calculates the total sum of estimated hours for all tasks.
+     * @return An Optional containing the total hours, or an empty Optional if there are no tasks.
+     */
     public Optional<Integer> getTotalEstimatedHours() {
         return tasks.stream()
                 .map(Task::estimatedHours)
                 .filter(Objects::nonNull)
                 .reduce(Integer::sum);
     }
-
-    // TODO: Implement using streams, map, and average
+    /**
+     * Calculates the average of estimated hours for all tasks.
+     * @return An OptionalDouble containing the average, or an empty OptionalDouble if there are no tasks.
+     */
     public OptionalDouble getAverageEstimatedHours() {
         return tasks.stream()
                 .map(Task::estimatedHours)
@@ -82,30 +98,39 @@ public class TaskAnalyzer {
                 .mapToInt(Integer::intValue)
                 .average();
     }
-
-    // TODO: Implement using method references and map
+    /**
+     * Extracts a list of all task titles.
+     * @return A List of strings, where each string is a task title.
+     */
     public List<String> getTaskTitles() {
         return tasks.stream()
                 .map(Task::title)
                 .collect(Collectors.toList());
     }
-
-    // TODO: Implement using custom functional interface
+    /**
+     * Filters tasks using a custom functional interface.
+     * @param predicate The custom predicate to apply.
+     * @return A new list containing only the tasks that match the predicate.
+     */
     public List<Task> filterWithCustomPredicate(TaskPredicate predicate) {
         return tasks.stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
-
-    // TODO: Implement using streams and flatMap
+    /**
+     * Collects all tags from all tasks (including duplicates) and sorts them alphabetically.
+     * @return A sorted List of all tags.
+     */
     public List<String> getAllTagsSorted() {
         return tasks.stream()
                 .flatMap(task -> task.tags().stream())
                 .sorted()
                 .collect(Collectors.toList());
     }
-
-    // TODO: Implement using streams and counting collector
+    /**
+     * Counts the number of tasks for each priority level.
+     * @return A Map where keys are priorities and values are the count of tasks with that priority.
+     */
     public Map<Task.Priority, Long> countTasksByPriority() {
         return tasks.stream()
                 .collect(Collectors.groupingBy(
@@ -113,21 +138,28 @@ public class TaskAnalyzer {
                         Collectors.counting()
                 ));
     }
-
-    // TODO: Implement using Optional operations
+    /**
+     * Generates a brief summary string for a specific task.
+     * @param taskId The ID of the task to summarize.
+     * @return A formatted string with the task's title and status, or a "not found" message.
+     */
     public String getTaskSummary(Long taskId) {
         return findTaskById(taskId)
                 .map(task -> String.format("%s - %s", task.title(), task.status()))
                 .orElse("Task not found");
     }
-
-    // TODO: Implement using streams and anyMatch
+    /**
+     * Checks if there are any overdue tasks in the list.
+     * @return true if at least one task is overdue, false otherwise.
+     */
     public boolean hasOverdueTasks() {
         return tasks.stream()
                 .anyMatch(Task::isOverdue);
     }
-
-    // TODO: Implement using streams and allMatch
+    /**
+     * Checks if all active tasks have an assignee.
+     * @return true if all tasks IN_PROGRESS state are assigned or not done, false otherwise.
+     */
     public boolean areAllTasksAssigned() {
         return tasks.stream()
                 .allMatch(Task::isActive);

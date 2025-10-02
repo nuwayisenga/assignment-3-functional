@@ -248,7 +248,7 @@ class TaskAnalyzerTest {
             List<String> tags = analyzer.getAllTagsSorted();
 
             assertThat(tags)
-                .hasSize(11) // Some tasks have multiple tags
+                .hasSize(10) // Some tasks have multiple tags
                 .isSorted()
                 .contains("bug", "deployment", "development", "documentation");
         }

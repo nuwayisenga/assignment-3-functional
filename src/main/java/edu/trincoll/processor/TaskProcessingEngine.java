@@ -20,7 +20,12 @@ import java.util.stream.Stream;
 
 public class TaskProcessingEngine {
 
-    // TODO: Implement pipeline processing using Function composition
+    /**
+     * Processes a list of tasks by applying a sequence of operations in a pipeline.
+     * @param tasks The initial list of tasks to process.
+     * @param operations A list of functions, each representing a step in the processing pipeline.
+     * @return A new list of tasks after all operations have been applied.
+     */
     // Process tasks through a pipeline of operations using function composition
     public List<Task> processPipeline(
             List<Task> tasks,
@@ -38,13 +43,23 @@ public class TaskProcessingEngine {
         return pipeline.apply(tasks);
     }
 
-    // TODO: Implement using Supplier for lazy evaluation
+    /**
+     * Returns the task from an Optional if present, otherwise returns a default task provided by a Supplier.
+     * The Supplier is only invoked if the Optional is empty (lazy evaluation).
+     * @param taskOpt An Optional that may contain a task.
+     * @param defaultSupplier A Supplier that provides a default task.
+     * @return The task from the Optional or the default task.
+     */
     // Get task from Optional or create default using Supplier (lazy evaluation)
     public Task getOrCreateDefault(Optional<Task> taskOpt, Supplier<Task> defaultSupplier) {
         return taskOpt.orElseGet(defaultSupplier);
     }
 
-    // TODO: Implement using Consumer for side effects
+    /**
+     * Applies an action with side effects (e.g., logging, saving to DB) to each task in a list.
+     * @param tasks The list of tasks to process.
+     * @param sideEffect A Consumer that defines the action to be performed on each task.
+     */
     // Process tasks with side effects using Consumer
     public void processTasksWithSideEffects(
             List<Task> tasks,
@@ -52,13 +67,24 @@ public class TaskProcessingEngine {
         tasks.forEach(sideEffect);
     }
 
-    // TODO: Implement using BiFunction
+    /**
+     * Merges two tasks into a single task using a provided merging strategy.
+     * @param task1 The first task.
+     * @param task2 The second task.
+     * @param merger A BiFunction that defines how to combine the two tasks.
+     * @return The resulting merged task.
+     */
     // Merge two tasks using BiFunction
     public Task mergeTasks(Task task1, Task task2, BiFunction<Task, Task, Task> merger) {
         return merger.apply(task1, task2);
     }
 
-    // TODO: Implement using UnaryOperator
+    /**
+     * Applies a uniform transformation to every task in a list.
+     * @param tasks The list of tasks to transform.
+     * @param transformer A UnaryOperator that defines the transformation.
+     * @return A new list containing the transformed tasks.
+     */
     // Transform all tasks using UnaryOperator
     public List<Task> transformAll(List<Task> tasks, UnaryOperator<Task> transformer) {
         return tasks.stream()
@@ -66,7 +92,13 @@ public class TaskProcessingEngine {
                 .collect(Collectors.toList());
     }
 
-    // TODO: Implement using custom functional interfaces
+    /**
+     * Filters a list of tasks and then applies a transformation to the filtered results.
+     * @param tasks The initial list of tasks.
+     * @param filter A TaskPredicate to select which tasks to transform.
+     * @param transformer A TaskTransformer to apply to the filtered tasks.
+     * @return A new list containing the transformed tasks that passed the filter.
+     */
     // Filter and transform tasks using custom functional interfaces
     public List<Task> filterAndTransform(
             List<Task> tasks,
@@ -77,8 +109,12 @@ public class TaskProcessingEngine {
                 .map(transformer)
                 .collect(Collectors.toList());
     }
-
-    // TODO: Implement batch processing with TaskProcessor
+    /**
+     * Processes a list of tasks in smaller batches.
+     * @param tasks The full list of tasks to process.
+     * @param batchSize The size of each batch.
+     * @param processor The TaskProcessor that defines the action to perform on each batch.
+     */
     public void batchProcess(
             List<Task> tasks,
             int batchSize,
@@ -92,7 +128,11 @@ public class TaskProcessingEngine {
         }
     }
 
-    // TODO: Implement Optional chaining
+    /**
+     * Finds the task with the highest priority and returns its title.
+     * @param tasks The list of tasks to search.
+     * @return An Optional containing the title of the highest-priority task, or an empty Optional if the list is empty.
+     */
     // Get the title of the highest priority task using Optional chaining
     public Optional<String> getHighestPriorityTaskTitle(List<Task> tasks) {
         return tasks.stream()
@@ -101,13 +141,21 @@ public class TaskProcessingEngine {
                 .map(Task::title);
     }
 
-    // TODO: Implement stream generation using Stream.generate
-    // Generate an infinite stream of tasks using Stream.generate
+    /**
+     * Generates an infinite stream of tasks using a Supplier.
+     * @param taskSupplier A Supplier that creates new task objects.
+     * @return An infinite Stream of tasks.
+     */
     public Stream<Task> generateTaskStream(Supplier<Task> taskSupplier) {
         return Stream.generate(taskSupplier);
     }
 
-    // TODO: Implement using Comparator composition
+    /**
+     * Sorts a list of tasks based on a sequence of multiple criteria.
+     * @param tasks The list of tasks to sort.
+     * @param comparators A list of comparators defining the sorting order. The first comparator is primary, the second is secondary, and so on.
+     * @return A new list of tasks sorted by the combined criteria.
+     */
     public List<Task> sortByMultipleCriteria(
             List<Task> tasks,
             List<Comparator<Task>> comparators) {
