@@ -10,6 +10,22 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TaskAnalyzer {
+
+    /**
+     * AI Collaboration Report:
+            * Tool: Gemini, claude
+            * Most Helpful Prompts:
+            * 2. My test was failing with 'Expected size: 11 but was: 10' for the getAllTagsSorted method. Helped with the specific issue with duplicate tags).
+            * 3. helped with adding Javadoc comments to the completed Java class.".
+
+            * Concepts Learned:
+            * - Stream Pipeline: Learned to chain stream operations like filter, map, sorted, and flatMap to process collections declaratively.
+            * - Collectors API: Gained experience with terminal operations using Collectors, especially for grouping (groupingBy), partitioning (partitioningBy), and data aggregation (counting, toSet, toList).
+            * - Optional API: Understood how to use Optional for null-safe code, including chaining operations with .map() and providing default values with .orElse() and .orElseGet().
+            * - Higher-Order Functions: Learned to implement methods that accept functions as arguments (e.g., Predicate, Function, Consumer, Supplier) to create flexible and reusable code.
+            * - Function Composition: Practiced combining multiple functions and comparators to build complex logic from simple, reusable pieces (e.g., processPipeline and sortByMultipleCriteria).
+            */
+
     private final List<Task> tasks;
     /**
      * Constructs a TaskAnalyzer with a list of tasks to analyze.
